@@ -12,9 +12,27 @@
             <li class="nav-item"><a class="nav-link" href="/">Возможности</a></li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="/">Зарегистрироваться</a></li>
-            <li class="nav-item"><a class="nav-link" href="/">Войти</a></li>
+            {% if current_user.is_anonymous %}
+            <li class="nav-item"><a class="nav-link" href="/register">Зарегистрироваться</a></li>
+            {% endif %}
+            {% if current_user.is_anonymous %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('login')}}">Войти</a></li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout')}}">Выйти</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
 {% endblock navbar %}
+
+{% block  content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% endblock  %}

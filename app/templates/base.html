@@ -1,9 +1,18 @@
 {% extends 'bootstrap/base.html' %}
-{% block title %}{% endblock %}
 
-{% block navbar %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% endblock navbar %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
 
-{% block content %}
-{% endblock content %}
+<body>
+    {% block navbar %}
+    {% endblock navbar %}
+
+    {% block content %}
+    {% endblock content %}
+</body>

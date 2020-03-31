@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Войти на сайт{% endblock title %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Prices</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('index')}}">Главная</a></li>
+            <li class="nav-item"><a class="nav-link" href="/">Возможности</a></li>
+        </ul>
+    </div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+<h1>Войти</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.username.label }}<br>
+        {{ form.username(size=32) }}<br>
+        {% for error in form.username.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}<br>
+        {% for error in form.password.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+    <p>{{ form.submit() }}</p>
+</form>
+<p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+{% endblock %}
