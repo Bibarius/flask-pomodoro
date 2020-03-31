@@ -8,13 +8,15 @@ from flask_login import current_user, login_required, login_user, logout_user
 @app.route("/")
 @app.route("/index")
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for("cabinet"))
     return render_template("index.html")
 
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("index"))
+        return redirect(url_for("cabinet"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -22,7 +24,7 @@ def login():
             flash("Invalid username or password")
             return redirect(url_for("login"))
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for("index"))
+        return redirect(url_for("cabinet"))
     return render_template("login.html", form=form)
 
 
@@ -35,7 +37,7 @@ def logout():
 @app.route("/register", methods=["POST", "GET"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("index"))
+        return redirect(url_for("cabinet"))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
@@ -45,3 +47,9 @@ def register():
         flash("Succsesfully registered")
         return redirect(url_for("login"))
     return render_template("register.html", form=form)
+
+
+@app.route("/cabinet")
+@login_required
+def cabinet():
+    return render_template("cabinet.html")
