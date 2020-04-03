@@ -65,8 +65,13 @@
                 </li>
             </ul>
         </nav>
-
         <div id="content">
+
+            {% for task in tasks %}
+            <h2>{{task.text}}</h2>
+            {% endfor %}
+
+
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -102,6 +107,15 @@
                                 placeholder="Что нужно сделать">
                         </div>
                         <ul class="list-group" id="todo">
+
+
+
+                            {% for task in tasks %}
+                            {% include '_task.html' %}
+                            {% endfor %}
+
+
+
                         </ul>
 
                         <ul class="list-group pt-5" id="done">

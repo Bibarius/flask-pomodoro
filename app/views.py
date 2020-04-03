@@ -1,6 +1,6 @@
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import User, Task
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
@@ -52,6 +52,6 @@ def register():
 @app.route("/cabinet")
 @login_required
 def cabinet():
-    id = current_user.get_id()
-    user = User.query.filter_by(id=id).first()
-    return render_template("cabinet.html", username=user.username)
+    user = User.query.filter_by(id=current_user.get_id()).first()
+    tasks = user.get_tasks()
+    return render_template("cabinet.html", username=user.username, tasks=tasks)

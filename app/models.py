@@ -8,12 +8,16 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, index=True)
     email = db.Column(db.String(128), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+    tasks = db.relationship("Task", backref="author", lazy="dynamic")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def get_tasks(self):
+        return Task.query.filter_by(user_id=self.id)
 
 
 class Task(db.Model):
