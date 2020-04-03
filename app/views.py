@@ -52,4 +52,6 @@ def register():
 @app.route("/cabinet")
 @login_required
 def cabinet():
-    return render_template("cabinet.html")
+    id = current_user.get_id()
+    user = User.query.filter_by(id=id).first()
+    return render_template("cabinet.html", username=user.username)
