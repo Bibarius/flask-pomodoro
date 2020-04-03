@@ -22,7 +22,6 @@ class User(UserMixin, db.Model):
 
 class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
-    done = db.Column(db.Boolean)
     text = db.Column(db.String(140))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
