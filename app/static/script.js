@@ -4,13 +4,14 @@ $(document).ready(function () {
     });
 });
 
-var tasks_obj = {
-    to_do: [],
-    delete: [],
-}
+
 
 
 document.getElementsByClassName('btn-success')[0].addEventListener('click', function (event) {
+    var tasks_obj = {
+        to_do: [],
+        delete: [],
+    }
     tasks = document.getElementsByClassName('form-check-label');
     array = Array.prototype.slice.call(tasks)
     array.forEach(function (item) {
@@ -23,12 +24,16 @@ document.getElementsByClassName('btn-success')[0].addEventListener('click', func
         else {
             if (!item.id) {
                 tasks_obj['to_do'].push(item.innerHTML)
-                console.log('добавляем');
             }
         }
     })
 
+    request = new XMLHttpRequest()
+    request.open("POST", '/refresh', true)
+    request.setRequestHeader('Content-Type', 'application/json')
+    request.send(JSON.stringify(tasks_obj))
     console.log(tasks_obj)
+    tasks_obj = null
 })
 
 
@@ -122,7 +127,6 @@ function refresh_listeners() {
         })
 
     }
-    console.log(checkboxes)
 }
 
 window.onload = function () {

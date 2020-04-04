@@ -19,6 +19,16 @@ class User(UserMixin, db.Model):
     def get_tasks(self):
         return Task.query.filter_by(user_id=self.id)
 
+    def add_task(self, task_text):
+        t = Task(text=task_text, author=self)
+        db.session.add(t)
+        db.session.commit()
+
+    def delete_task(self, task_id):
+        task = self.tasks.filter_by(task_id=task_id).first()
+        db.session.delete(task)
+        db.session.commit()
+
 
 class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)

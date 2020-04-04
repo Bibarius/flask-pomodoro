@@ -55,3 +55,20 @@ def cabinet():
     user = User.query.filter_by(id=current_user.get_id()).first()
     tasks = user.get_tasks()
     return render_template("cabinet.html", username=user.username, tasks=tasks)
+
+
+@app.route("/refresh", methods=["POST"])
+@login_required
+def refresh():
+    data = request.get_json()
+    to_do = data["to_do"]
+    delete = data["delete"]
+    if to_do:
+        for i in to_do:
+            current_user.add_task(i)
+
+    if delete:
+        for i in delete:
+            current_user.delete_task(int(i))
+
+    return "good"
